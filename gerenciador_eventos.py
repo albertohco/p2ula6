@@ -36,7 +36,7 @@ def salvar_eventos(caminho_arquivo, eventos):
     except IOError as e:
         print(f"Erro ao salvar os eventos: {e}")
 
-def adicionar_evento(eventos):
+def adicionar_evento(eventos,caminho_arquivo):
     titulo = input("Digite o título do evento: ").strip()
 
     if not titulo:
@@ -48,7 +48,7 @@ def adicionar_evento(eventos):
 
     while not data_hora_valida:
         try:
-            data_hora_str = input("Digite a data e hora do evento (formato: DD-MM-AAAA HH:MM): ").strip()
+            data_hora_str = input("Digite a data e hora do evento (formato: DD/MM/AAAA HH:MM): ").strip()
             datetime_obj = datetime.strptime(data_hora_str, "%d/%m/%Y %H:%M")
             data_hora_valida = True
             data_hora_str = datetime_obj.isoformat()
@@ -60,6 +60,10 @@ def adicionar_evento(eventos):
         "data_hora": data_hora_str
     }
     eventos.append(evento)
+
+     # Salva os eventos no arquivo
+    salvar_eventos(caminho_arquivo, eventos )
+
     print(f"Evento '{titulo}'adicionado com sucesso.")
 
 def listar_eventos(eventos):
@@ -137,5 +141,6 @@ def menu_principal():
             # Opção inválida
             print("❌ Opção inválida! Por favor, escolha 1, 2, 3 ou 4.\n")
 
-
+if __name__ == "__main__":
+    menu_principal()
     
